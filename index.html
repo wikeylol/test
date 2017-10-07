@@ -1,0 +1,125 @@
+<html>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="bootstrap.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<head></head>
+<body>
+	<br>
+	<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Закинуть товар в корзину</button>-->
+	<a class="_showTtl"><button type="button" class="btn btn-primary _addItem" id=91629841>Закинуть товар в корзину</button><a>
+	<div id="my-store-12178076"></div>
+	<div>
+	<script type="text/javascript" src="https://app.ecwid.com/script.js?12178076&data_platform=code&data_date=2017-09-19" charset="utf-8"></script><script type="text/javascript"> xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list","id=my-store-12178076");</script>
+	</div>
+	<div id="my-cart-12178076"></div>
+	<div>
+	<script type="text/javascript" src="https://app.ecwid.com/script.js?12178076&data_platform=code&data_date=2017-09-19" charset="utf-8"></script>
+	<!-- remove layout parameter if you want to position minicart yourself -->
+	<script type="text/javascript"> xMinicart("layout=attachToCategories", "id=my-cart-12178076"); </script>
+	</div>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Инфо</h4>
+		  </div>
+		  <div class="modal-body" id="my_modal_body">
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Инфо</h4>
+		  </div>
+		  <div class="modal-body" id="my_modal_body2">
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<script>
+		$(document).on("click", "._addItem", function (){
+			//var productId = 91629841;
+			var prod = [91629841, 91629831, 91629852, 91629854]
+			lastEl = prod.length - 1;
+			
+			function rnd(min, max) {
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+			
+			var productId = prod[rnd(0, lastEl)];
+			var info = "";
+			var wght = 0;
+			var ttl = 0;
+			Ecwid.Cart.addProduct(productId); 
+			
+			/*Ecwid.Cart.calculateTotal(function(order) {
+			  if (!order)
+				alert('An error occurred while calculating the order!')
+			  else      
+				info+="<div>Товаров в корзине на общую сумму "+order.total+" рублей</div>";
+				alert("Товаров в корзине на общую сумму "+order.total+" рублей");
+				
+				if (order.total > 0){
+					Ecwid.Cart.get(function(cart) {
+						var ttl = cart.productsQuantity;
+						info+="<div>Товаров в корзине "+ttl+" штук</div>";
+						alert("Товаров в корзине "+ttl+" штук");
+					});
+					
+					Ecwid.Cart.get(function(cart) {
+						var wght = cart.weight;
+						info+="<div>Товаров в корзине весом "+wght+" килограмм</div>";
+						alert("Товаров в корзине весом "+wght+" килограмм");
+					});
+				}
+			});*/
+			
+			Ecwid.Cart.get(function(cart) {
+				var ttl = cart.productsQuantity;
+				info+="<div>Товаров в корзине "+ttl+" штук</div>";
+				//alert("Товаров в корзине "+ttl+" штук");
+			});
+					
+			Ecwid.Cart.get(function(cart) {
+				var wght = cart.weight;
+				info+="<div>Товаров в корзине весом "+wght+" килограмм</div>";
+				//alert("Товаров в корзине весом "+wght+" килограмм");
+			});
+			$('#myModal').modal('show');
+			$('#my_modal_body').html(info);
+		});
+	</script>
+	<script>
+		$(document).on("click", "._showTtl", function (){
+			var info2 = "";
+			Ecwid.Cart.calculateTotal(function(order) {
+			  if (!order)
+				alert('An error occurred while calculating the order!')
+			  else      
+				info2+="<div>Товаров в корзине на общую сумму "+order.total+" рублей</div>";
+				alert("Товаров в корзине на общую сумму "+order.total+" рублей");
+			});
+			
+			//$('#myModal2').modal('show');
+			//$('#my_modal_body2').html(info2);
+		});
+	</script>
+</body>
+</html>
